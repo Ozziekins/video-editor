@@ -2,6 +2,7 @@ import './App.css';
 import VideoEdit from './pages/VideoEdit';
 import React, { useState, useRef } from 'react';
 import {Routes, Route, useNavigate } from 'react-router-dom';
+import { FaArrowCircleUp} from 'react-icons/fa';
 
 function App() {
   const [videoUrl, setVideoUrl] = useState('');
@@ -85,7 +86,7 @@ function Home({ handleBrowseClick, handleLinkUploadClick, showLinkInput, handleL
       <h1 className="heading">Upload a video</h1>
       <div className="upload-section">
         <div className="upload-icon">
-          <span className="upload-icon-inner"></span>
+          <FaArrowCircleUp className="upload-icon-inner"/>
         </div>
         <h2 className="upload-text">Drag &amp; drop the file you want to upload</h2>
         <div className="button-container">
