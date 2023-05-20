@@ -25,7 +25,6 @@ function App() {
 
   const handleBrowseClick = () => {
     fileInputRef.current.click();
-    console.log("Browse clicked")
   };
 
   const handleLinkUploadClick = () => {
@@ -36,7 +35,6 @@ function App() {
     event.preventDefault();
     const link = event.target.elements.link.value.trim();
     if (link) {
-      console.log("Move to verifying")
       verifyVideoLink(link);
     }
   };
@@ -55,7 +53,6 @@ function App() {
     setLoading(true);
     const video = document.createElement('video');
     video.src = link;
-    console.log("Verifying")
 
     video.addEventListener('loadedmetadata', () => {
       setVideoUrl(link);

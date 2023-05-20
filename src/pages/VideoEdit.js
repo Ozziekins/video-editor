@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './VideoEdit.css';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
@@ -7,42 +7,23 @@ function VideoEdit({ videoUrl }) {
   const [text, setText] = useState('');
   const [showControls, setShowControls] = useState(false);
   const [fontSize, setFontSize] = useState(30);
-  const [textPosition, setTextPosition] = useState({ x: 20, y: 50 });
+  const [textPosition, setTextPosition] = useState({ x: 32, y: 20 });
   const [fontFamily, setFontFamily] = useState('Arial');
   const [fontStyle, setFontStyle] = useState('normal');
   const navigate = useNavigate();
-  const canvasRef = useRef(null);
   const inputRef = useRef(null);
-
-  const drawTextOnCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const video = document.querySelector('.uploaded-video');
-    console.log(text);
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(video, 0, 0);
-
-    ctx.font = `${fontStyle} ${fontSize}px ${fontFamily}`;
-    ctx.fillStyle = 'black';
-    ctx.fillText(text, textPosition.x, textPosition.y);
-  }, [text, fontSize, textPosition, fontFamily, fontStyle]);
 
   const handleTextChange = (event) => {
     setText(event.target.value);
   };
 
   const handleAddText = useCallback(() => {
-    drawTextOnCanvas();
     setShowControls(true);
-    setText('');
-  }, [drawTextOnCanvas]);
+  }, []);
 
   const handleFontSizeChange = (event) => {
-    setFontSize(parseInt(event.target.value));
+    const size = parseInt(event.target.value);
+    setFontSize(isNaN(size) ? 0 : size);
   };
 
   const handleTextPositionChange = (event, axis) => {
@@ -61,15 +42,15 @@ function VideoEdit({ videoUrl }) {
   };
 
   const handleApplyChanges = useCallback(() => {
-    drawTextOnCanvas();
     setShowControls(false);
-  }, [drawTextOnCanvas]);
+    setText('');
+  }, []);
 
   useEffect(() => {
     if (!videoUrl) {
       navigate('/');
     }
-  
+
     const handleKeyDown = (event) => {
       if (event.keyCode === 13) {
         event.preventDefault();
@@ -90,17 +71,34 @@ function VideoEdit({ videoUrl }) {
       };
     }
   }, [videoUrl, navigate, showControls, handleAddText, handleApplyChanges]);
-  
+
+  const navigateToHome = () => {
+    navigate('/');
+  };
 
   return (
     <div className="container">
       <div className="upload-video-page">
-        <button className="back-button" onClick={() => navigate('/')}>
+        <button className="back-button" onClick={navigateToHome}>
           <IoIosArrowRoundBack className="back-icon" />
         </button>
         <video controls className="uploaded-video">
           <source src={videoUrl} type="video/mp4" />
         </video>
+        {showControls && (
+          <div
+            className="text-overlay"
+            style={{
+              fontSize: `${fontSize}px`,
+              top: `${textPosition.y}%`,
+              left: `${textPosition.x}%`,
+              fontFamily,
+              fontStyle,
+            }}
+          >
+            {text}
+          </div>
+        )}
         {!showControls ? (
           <div className="text-input-container">
             <input
@@ -173,11 +171,10 @@ function VideoEdit({ videoUrl }) {
               </select>
             </div>
             <button className="purple-button" onClick={handleApplyChanges}>
-              Apply
+              Clear
             </button>
           </div>
         )}
-        <canvas ref={canvasRef} className="canvas" />
       </div>
     </div>
   );
