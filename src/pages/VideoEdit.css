@@ -1,0 +1,104 @@
+.upload-video-page {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.uploaded-video {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.text-input-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-input {
+  padding: 8px;
+  margin-right: 10px;
+  width: 300px;
+}
+
+.purple-button {
+  background-color: purple;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: purple;
+  font-size: 24px;
+}
+
+.back-icon {
+  width: 48px;
+  height: 48px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.text-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.control-group label {
+  margin-right: 10px;
+}
+
+.control-input {
+  width: 60px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.canvas {
+  display: none;
+}
+
+.output-video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+.output-video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
